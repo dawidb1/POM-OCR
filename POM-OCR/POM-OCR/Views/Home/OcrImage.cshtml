@@ -1,0 +1,28 @@
+﻿@model IronOcr.OcrResult
+@{
+    ViewBag.Title = "OcrImage";
+}
+<script type="text/javascript">
+    function changeFont() {
+        var size = document.getElementById('pstyle').style.fontSize;
+        var number = size.substring(0, 2);
+        var numberInt = parseInt(number);
+        numberInt += 2;
+        document.getElementById('pstyle').style.fontSize = numberInt + 'px';
+    }
+</script>
+
+<h2>OcrImage</h2>
+<div>
+    <p id="pstyle" style="font-size:12px">@Model</p>
+</div>
+<div>
+    <button type="button" style="margin:20px; font-size:x-large" onclick="changeFont();">Make bigger</button>
+    <br/>
+</div>
+<div>
+    <img src="@Url.Content(ViewBag.Path)" alt="Image" height="500" />
+</div>
+
+
+
