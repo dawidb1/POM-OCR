@@ -1,34 +1,25 @@
+// [v0.0.1]
+
 /*
 1. MAIN FILE
-    pobierz plik
-    *wyślij na serwer
-    wyświetl plik
-2. PICTURES
-
-3. TEXT IMAGES
+    pobierz plik - ok
+    wyświetl plik - ok 
+2. PICTURES - Daniel, Maciek
+3. TEXT IMAGES - Dawid
 4. DISPLAY
-
  */
 
-// [v 0.0.1]
-
-//MAIN FILE
-// url loadFile(string path)
-// {
-//     bool isJpg(string path);
-//     //*url copyToSerwer() //na jakiś hosting
-// }
+#region MAIN FILE
 Image loadFile()
 {
     bool isJpg(Image mainImage);
 }
 
 void displayFile(mainImage);
+#endregion
 
-//PICTURES
-//do wyboru OR
-//znalezienie tych obrazów i co z nimi w obrazie głównym? zamieniać na białe?'
-
+#region PICTURES
+{
 //DANIEL
 (
 void onButtonSelectPicturesClick(Image file){
@@ -41,22 +32,26 @@ List<Image>,List<field> detectPictures(Image file);
 
 //MACIEK
 void changeDetectedToWhite(Image file, List<Field> fieldList)
+#endregion
 
+#region TEXT IMAGES
 //DAWID
-//TEXT IMAGES
 List<Image> splitTextImages(Image mainImage){ 
     MSER();
 }
 
 List<string> OCR(textImages);
+}
+#endregion
 
-//DISPLAY
+#region DISPLAY
 void displayResults(texts, pictures)
 {
     display(text);
     display(pictures);
     // do v2: wycięte miejsca znakowane kolorem do lokalizacji zdjęć
 }
+#endregion
 
 //POMOCNICZE
 struct Field{
@@ -65,5 +60,4 @@ struct Field{
 
 // OGRANICZENIA WERSJI:
 // wszystkie obrazy ładujemy na końcu strony
-// może wykrywać tekst w obrazach
-// nie formatuje tekstu tylko robi puste miejsca
+// nie formatuje tekstu tylko go oddziela

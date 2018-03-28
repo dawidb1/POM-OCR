@@ -11,6 +11,7 @@ namespace POM_OCR.Controllers
 {
     public class HomeController : Controller
     {
+        static Image image;
         public ActionResult Index()
         {
             return View();
@@ -28,24 +29,17 @@ namespace POM_OCR.Controllers
             imageCookie.Value = imageModel.ImagePath;
             Response.Cookies.Add(imageCookie);
 
-            //REQUEST COOKIE
-            //HttpCookie imageCookie = Request.Cookies["imageTestCookie"];
 
-            //IMAGE TO DB
-            //using (DbModels db = new DbModels())
-            //{
-            //    db.Images.Add(imageModel);
-            //    db.SaveChanges();
-            //}
             return RedirectToAction("OpenImage","Home");
+            
         }
         public ActionResult OpenImage()
         {
-            ViewBag.Message = "Bla bla";
             HttpCookie imagePath = Request.Cookies["ImageTestCookie"];
+            image = new Image();
+            image.ImagePath = imagePath.Value.ToString();
 
-            ViewBag.Path = imagePath.Value.ToString(); //na teraz
-            return View();
+            return View(image);
         }
         public ActionResult OcrImage()
         {
