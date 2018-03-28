@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000">
     <Grid>
-        <Image Name="image1" HorizontalAlignment="Left" Height="555" Margin="23,19,0,0" VerticalAlignment="Top" Width="711"/>
+        <Button Content="click me" Height="30" Width="60" Name="btnClick" Visibility="Hidden" Click="btnClick_Click"></Button>
+        <Image x:Name="image1" HorizontalAlignment="Left" Height="570" Margin="32,53,0,0" VerticalAlignment="Top" Width="397"/>
+        <Image x:Name="image2" HorizontalAlignment="Left" Height="570" Margin="565,53,0,0" VerticalAlignment="Top" Width="397"/>
 
     </Grid>
 </Window>

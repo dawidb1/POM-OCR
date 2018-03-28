@@ -16,6 +16,7 @@ using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
 using System.Windows;
 using System.IO;
+using System.Threading;
 
 namespace text_region_detection
 {
@@ -24,55 +25,59 @@ namespace text_region_detection
     /// </summary>
     public partial class MainWindow : Window
     {
+        Image<Bgr, Byte> img;
+        List<BitmapImage> resultList;
+        static int counter;
         public MainWindow()
         {
+
             InitializeComponent();
-            Image<Bgr, Byte> img = new Image<Bgr, Byte>(@"C:\Users\Dawid\Documents\GitHub\POM-OCR\POM-OCR\text region detection\Image\Przechwytywanie.PNG");
-            detectLetters(img);
-            //List<Rectangle> rects = detectLetters(img);
-            //for (int i = 0; i < rects.Count(); i++)
-            //    img.Draw(rects.ElementAt<Rectangle>(i), new Bgr(0, 255, 0), 3);
-            //CvInvoke.cvShowImage("Display", img.Ptr);
-            //CvInvoke.cvWaitKey(0);
-            //CvInvoke.cvDestroyWindow("Display");
+            img = new Image<Bgr, Byte>(@"C:\Users\Dawid\Documents\GitHub\POM-OCR\POM-OCR\text region detection\Image\Przechwytywanie.PNG");
+            image1.Source = convertBitmapToImage(img.Bitmap);
+
+            DetectText(img);
+            btnClick.Visibility = Visibility.Visible;
+            counter = resultList.Count;
         }
-        //List<Rectangle>
-        public void detectLetters(Image<Bgr, Byte> img)
+        private void DetectText(Image<Bgr, byte> img)
         {
-            List<Rectangle> rects = new List<Rectangle>();
-            Image<Gray, Single> img_sobel;
-            Image<Gray, Byte> img_gray, img_threshold, imgout;
-            img_gray = img.Convert<Gray, Byte>();
-            img_sobel = img_gray.Sobel(1, 0, 3);
-            img_threshold = new Image<Gray, byte>(img_sobel.Size);
-            imgout = new Image<Gray, byte>(img_gray.Size);
-
-            CvInvoke.Threshold(img_sobel.Convert<Gray, Byte>(), img_threshold, 0, 255, ThresholdType.Otsu);
-
-            Mat structure = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new System.Drawing.Size(3, 17), new System.Drawing.Point(1, 6));
-            CvInvoke.MorphologyEx(img_threshold, img_threshold, MorphOp.Close, structure, new System.Drawing.Point(-1,-1), 1,  BorderType.Default, new MCvScalar());
-
+            /*
+             1. Edge detection (sobel)
+             2. Dilation (10,1)
+             3. FindContours
+             4. Geometrical Constrints
+             */
+            //sobel
+            Image<Gray, byte> sobel = img.Convert<Gray, byte>().Sobel(1, 0, 3).AbsDiff(new Gray(0.0)).Convert<Gray, byte>().ThresholdBinary(new Gray(50), new Gray(255));
+            Mat SE = CvInvoke.GetStructuringElement(Emgu.CV.CvEnum.ElementShape.Rectangle, new System.Drawing.Size(10, 2), new System.Drawing.Point(-1, -1));
+            sobel = sobel.MorphologyEx(Emgu.CV.CvEnum.MorphOp.Dilate, SE, new System.Drawing.Point(-1, -1), 1, Emgu.CV.CvEnum.BorderType.Reflect, new MCvScalar(255));
             Emgu.CV.Util.VectorOfVectorOfPoint contours = new Emgu.CV.Util.VectorOfVectorOfPoint();
-            Mat hier = new Mat();
+            Mat m = new Mat();
 
-            CvInvoke.FindContours(img_threshold, contours, hier, RetrType.External, ChainApproxMethod.ChainApproxNone);
+            CvInvoke.FindContours(sobel, contours, m, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
 
-          
-            CvInvoke.DrawContours(imgout, contours, -1, new MCvScalar(255, 0, 0));
+            List<Rectangle> list = new List<Rectangle>();
+            Image<Bgr, byte> result = img.Copy();
+            Image<Bgr, byte> mask;
 
-            image1.Source = convertBitmapToImage(imgout.Bitmap);
+            resultList = new List<BitmapImage>();
 
-            //   imgout.Bitmap;
-            //for (contours = img_threshold.FindContours(); contours != null; contours = contours.HNext)
-            //{
-            //    if (contours.Area > 100)
-            //    {
-            //        Contour<System.Drawing.Point> contours_poly = contours.ApproxPoly(3);
-            //        rects.Add(new Rectangle(contours_poly.BoundingRectangle.X, contours_poly.BoundingRectangle.Y, contours_poly.BoundingRectangle.Width, contours_poly.BoundingRectangle.Height));
-            //    }
-            //}
+            for (int i = 0; i < contours.Size; i++)
+            {
+                Rectangle brect = CvInvoke.BoundingRectangle(contours[i]);
 
+                double ar = brect.Width / brect.Height;
+                if (ar > 2 && brect.Width > 25 && brect.Height > 8 && brect.Height < 100)
+                {
+                    mask = new Image<Bgr, byte>(result.Size);
+                    list.Add(brect);
+                    CvInvoke.Rectangle(mask, brect, new MCvScalar(255, 255, 255), -1);
+                    mask._And(result);
+                    resultList.Add(convertBitmapToImage(mask.Bitmap));
+                }
+            }
         }
+
         BitmapImage convertBitmapToImage(Bitmap bmp)
         {
             MemoryStream ms = new MemoryStream();
@@ -84,6 +89,17 @@ namespace text_region_detection
             bi.EndInit();
 
             return bi;
+        }
+
+        private void btnClick_Click(object sender, RoutedEventArgs e)
+        {
+            if (counter>0)
+            {
+                counter--;
+                image2.Source = resultList[counter];
+            }
+            else MessageBox.Show("Koniec wykrytych fragmentów");
+          
         }
     }
 }
