@@ -11,23 +11,26 @@ namespace POM_OCR.Controllers
 {
     public class HomeController : Controller
     {
+        Image image;
         public ActionResult Index()
         {
             return View();
         }
         public ActionResult Add(Image imageModel)
         {
-            string fileName = Path.GetFileNameWithoutExtension(imageModel.ImageFile.FileName);
-            string extension = Path.GetExtension(imageModel.ImageFile.FileName);
-            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            imageModel.ImagePath = "~/Image/" + fileName;
-            fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
-            imageModel.ImageFile.SaveAs(fileName);
+            image = imageModel;
+            //string fileName = Path.GetFileNameWithoutExtension(imageModel.ImageFile.FileName);
+            //string extension = Path.GetExtension(imageModel.ImageFile.FileName);
+            //fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            //imageModel.ImagePath = "~/Image/" + fileName;
+            //fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+            //imageModel.ImageFile.SaveAs(fileName);
 
-            HttpCookie imageCookie = new HttpCookie("ImageTestCookie");
-            imageCookie.Value = imageModel.ImagePath;
-            Response.Cookies.Add(imageCookie);
+            //HttpCookie imageCookie = new HttpCookie("ImageTestCookie");
+            //imageCookie.Value = imageModel.ImagePath;
+            //Response.Cookies.Add(imageCookie);
 
+            //inne
             //REQUEST COOKIE
             //HttpCookie imageCookie = Request.Cookies["imageTestCookie"];
 
@@ -44,8 +47,8 @@ namespace POM_OCR.Controllers
             ViewBag.Message = "Bla bla";
             HttpCookie imagePath = Request.Cookies["ImageTestCookie"];
 
-            ViewBag.Path = imagePath.Value.ToString(); //na teraz
-            return View();
+            //ViewBag.Path = imagePath.Value.ToString(); //na teraz
+            return View(image);
         }
         public ActionResult OcrImage()
         {
