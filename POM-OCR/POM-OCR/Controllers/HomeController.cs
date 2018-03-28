@@ -11,44 +11,34 @@ namespace POM_OCR.Controllers
 {
     public class HomeController : Controller
     {
-        Image image;
+        static Image image;
         public ActionResult Index()
         {
             return View();
         }
         public ActionResult Add(Image imageModel)
         {
-            image = imageModel;
-            //string fileName = Path.GetFileNameWithoutExtension(imageModel.ImageFile.FileName);
-            //string extension = Path.GetExtension(imageModel.ImageFile.FileName);
-            //fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            //imageModel.ImagePath = "~/Image/" + fileName;
-            //fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
-            //imageModel.ImageFile.SaveAs(fileName);
+            string fileName = Path.GetFileNameWithoutExtension(imageModel.ImageFile.FileName);
+            string extension = Path.GetExtension(imageModel.ImageFile.FileName);
+            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            imageModel.ImagePath = "~/Image/" + fileName;
+            fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+            imageModel.ImageFile.SaveAs(fileName);
 
-            //HttpCookie imageCookie = new HttpCookie("ImageTestCookie");
-            //imageCookie.Value = imageModel.ImagePath;
-            //Response.Cookies.Add(imageCookie);
+            HttpCookie imageCookie = new HttpCookie("ImageTestCookie");
+            imageCookie.Value = imageModel.ImagePath;
+            Response.Cookies.Add(imageCookie);
 
-            //inne
-            //REQUEST COOKIE
-            //HttpCookie imageCookie = Request.Cookies["imageTestCookie"];
 
-            //IMAGE TO DB
-            //using (DbModels db = new DbModels())
-            //{
-            //    db.Images.Add(imageModel);
-            //    db.SaveChanges();
-            //}
             return RedirectToAction("OpenImage","Home");
+            
         }
         public ActionResult OpenImage()
         {
-            ViewBag.Message = "Bla bla";
             HttpCookie imagePath = Request.Cookies["ImageTestCookie"];
+            image = new Image();
+            image.ImagePath = imagePath.Value.ToString();
 
-            //ViewBag.Path = imagePath.Value.ToString(); //na teraz
-            throw new Exception("Nie potrafię wyświetlić obrazu z obiektu Image");
             return View(image);
         }
         public ActionResult OcrImage()

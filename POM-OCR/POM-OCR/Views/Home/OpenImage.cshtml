@@ -1,4 +1,5 @@
-﻿@model string
+﻿@using POM_OCR.Models
+@model Image
 @{
    // ViewBag.Title = "OpenImage";
 }
@@ -6,7 +7,7 @@
 <h2>OpeImage</h2>
 <h3>Choose boxes with text for better results</h3>
 <div>
-    <img src="@Url.Content(Model)" alt="Image" height="500" />
+    <img src="@Url.Content(Model.ImagePath)" alt="Image" height="500" />
 </div>
 <div>
     <button style="font-size:x-large"> @Html.ActionLink("OcrImage", "OcrImage", "Home")</button>
