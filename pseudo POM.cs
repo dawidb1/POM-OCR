@@ -6,7 +6,7 @@
     wyświetl plik - ok 
 2. PICTURES - Daniel, Maciek
 3. TEXT IMAGES - Dawid
-4. DISPLAY - 
+4. DISPLAY
  */
 
 #region MAIN FILE
@@ -19,16 +19,16 @@ void displayFile(mainImage);
 #endregion
 
 #region PICTURES
-
+{
 //DANIEL
-
+(
 void onButtonSelectPicturesClick(Image file){
     Field selectPicturesInImage(file);
     List<image> copyPictureToList(file, field);
 }
 OR
 List<Image>,List<field> detectPictures(Image file);
-
+);
 
 //MACIEK
 void changeDetectedToWhite(Image file, List<Field> fieldList)
