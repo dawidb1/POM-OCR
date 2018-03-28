@@ -48,6 +48,7 @@ namespace POM_OCR.Controllers
             HttpCookie imagePath = Request.Cookies["ImageTestCookie"];
 
             //ViewBag.Path = imagePath.Value.ToString(); //na teraz
+            throw new Exception("Nie potrafię wyświetlić obrazu z obiektu Image");
             return View(image);
         }
         public ActionResult OcrImage()
