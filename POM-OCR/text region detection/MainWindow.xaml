@@ -5,11 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:text_region_detection"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000">
+        Title="MainWindow" Height="700" Width="1000" WindowState="Maximized">
     <Grid>
-        <Button Content="click me" Height="30" Width="60" Name="btnClick" Visibility="Hidden" Click="btnClick_Click"></Button>
-        <Image x:Name="image1" HorizontalAlignment="Left" Height="570" Margin="32,53,0,0" VerticalAlignment="Top" Width="397"/>
-        <Image x:Name="image2" HorizontalAlignment="Left" Height="570" Margin="565,53,0,0" VerticalAlignment="Top" Width="397"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="click me" Height="30" Width="60" Name="btnClick" Visibility="Hidden" Click="btnClick_Click" Grid.Column="1" ></Button>
+        <Image x:Name="image1" Grid.Column="0"/>
+        <Image x:Name="image2" Grid.Column="2"/>
 
     </Grid>
 </Window>

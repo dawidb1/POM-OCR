@@ -28,11 +28,23 @@ namespace text_region_detection
         Image<Bgr, Byte> img;
         List<BitmapImage> resultList;
         static int counter;
+        static int enumCounter;
         public MainWindow()
         {
 
             InitializeComponent();
-            img = new Image<Bgr, Byte>(@"C:\Users\Dawid\Documents\GitHub\POM-OCR\POM-OCR\text region detection\Image\Przechwytywanie.PNG");
+            string fileName = "test0.jpg";
+            enumCounter++;
+
+            doMagic(fileName);
+        }
+        void doMagic(string fileName)
+        {
+            string middle = @"\Image\";
+            string root = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+            string path = $"{root}{middle}{fileName}";
+
+            img = new Image<Bgr, Byte>(path);
             image1.Source = convertBitmapToImage(img.Bitmap);
 
             DetectText(img);
@@ -93,13 +105,27 @@ namespace text_region_detection
 
         private void btnClick_Click(object sender, RoutedEventArgs e)
         {
-            if (counter>0)
+            if (counter > 0)
             {
                 counter--;
                 image2.Source = resultList[counter];
             }
-            else MessageBox.Show("Koniec wykrytych fragmentów");
-          
+            else
+            {
+                MessageBox.Show("Koniec wykrytych fragmentów");
+                string test = Enum.GetName(typeof(testList), enumCounter);
+                test = test + ".jpg";
+                doMagic(test);
+                if (enumCounter < 7)
+                {
+                    enumCounter++;
+                }
+                else enumCounter = 0;
+            }
         }
     }
+    enum testList
+    {
+        test0,test1,test2,test3,test4,test5,test6,test7,test8
+    };
 }

@@ -107,7 +107,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\Przechwytywanie.PNG" />
+    <Resource Include="Image\test0.JPG" />
+    <Resource Include="Image\test1.jpg" />
+    <Resource Include="Image\test2.jpg" />
+    <Resource Include="Image\test3.jpg" />
+    <Resource Include="Image\test4.jpg" />
+    <Resource Include="Image\test5.jpg" />
+    <Resource Include="Image\test6.JPG" />
+    <Resource Include="Image\test7.JPG" />
+    <Resource Include="Image\TextDetectionExample_06.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\test8.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\EMGU.CV.3.3.0.2824\build\Emgu.CV.targets" Condition="Exists('..\packages\EMGU.CV.3.3.0.2824\build\Emgu.CV.targets')" />
