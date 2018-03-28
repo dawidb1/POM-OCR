@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POM-OCR", "POM-OCR\POM-OCR.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POM-OCR.Tests", "POM-OCR.Tests\POM-OCR.Tests.csproj", "{DA5F7C3D-DD8A-4974-BCD3-9A386FBC4425}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "text region detection", "text region detection\text region detection.csproj", "{374C40E6-12E5-4F39-B251-991D90DBE880}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DA5F7C3D-DD8A-4974-BCD3-9A386FBC4425}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA5F7C3D-DD8A-4974-BCD3-9A386FBC4425}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA5F7C3D-DD8A-4974-BCD3-9A386FBC4425}.Release|Any CPU.Build.0 = Release|Any CPU
+		{374C40E6-12E5-4F39-B251-991D90DBE880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{374C40E6-12E5-4F39-B251-991D90DBE880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{374C40E6-12E5-4F39-B251-991D90DBE880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{374C40E6-12E5-4F39-B251-991D90DBE880}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
