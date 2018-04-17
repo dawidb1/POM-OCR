@@ -18,7 +18,7 @@ using System.Windows;
 using System.IO;
 using System.Threading;
 
-namespace text_region_detection
+namespace text_region_detection 
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
