@@ -1,7 +1,7 @@
 ﻿
 @model string
 @{
-   // ViewBag.Title = "OpenImage";
+    // ViewBag.Title = "OpenImage";
 }
 
 <h2>OpeImage</h2>
@@ -13,3 +13,65 @@
 <div>
     <button style="font-size:x-large"> @Html.ActionLink("OcrImage", "OcrImage", "ImageProcessing")</button>
 </div>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>JCrop Sample</title>
+
+    <script src="~/Scripts/jquery.Jcrop.min.js"></script>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/Content/jquery.Jcrop.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.Jcrop.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="@Href("~/Styles/StyleSheet.css")" type="text/css" />*@
+  
+
+</head>
+<body>
+<h1>JCrop Example</h1>
+
+    @*@RenderBody();*@
+@{
+    var top = Convert.ToInt32(Page.Height*0.1);
+    var left = Convert.ToInt32(Page.Width*0.1);
+    var right = Convert.ToInt32(Page.Width*0.9);
+    var bottom = Convert.ToInt32(Page.Height*0.9);
+}
+<img id="crop" src="@Url.Content(Model)" />
+<form action="/" method="post">
+    <input type="hidden" id="top" name="top" value="@top" /> 
+    <input type="hidden" id="left" name="left" value="@left" /> 
+    <input type="hidden" id="bottom" name="bottom" value="@bottom" /> 
+    <input type="hidden" id="right" name="right" value="@right" />
+    <input type="hidden" id="image" name="image" value="@Url.Content(Model)" />
+
+    <input type="submit" name="action" value="Przycisk" />
+</form>
+</body>
+</html>
+
+
+<script type="text/javascript">
+
+    $(function() {
+         $('#crop').Jcrop();
+    });
+
+
+    @*$(function () {
+        jQuery('#crop').Jcrop({
+            onSelect: storeCoords,
+            setSelect: [@top,@left,@right,@bottom]
+        });
+    });*@
+ 
+    function storeCoords(c) {
+        $('#top').val(c.y);
+        $('#left').val(c.x);
+        $('#bottom').val(c.y2);
+        $('#right').val(c.x2);
+    };
+</script>
