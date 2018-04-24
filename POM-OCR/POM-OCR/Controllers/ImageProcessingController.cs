@@ -13,6 +13,13 @@ namespace POM_OCR.Controllers
 {
     public class ImageProcessingController : Controller
     {
+        public ActionResult OpenImage()
+        {
+            HttpCookie imagePath = Request.Cookies["ImageTestCookie"];
+            var path = imagePath.Value;
+
+            return View(null, null, path);
+        }
 
         // GET: ImageProcessing
         public ActionResult Index()
@@ -53,13 +60,7 @@ namespace POM_OCR.Controllers
             return View(Result);
         }
 
-        public ActionResult OpenImage()
-        {
-            HttpCookie imagePath = Request.Cookies["ImageTestCookie"];
-            var path = imagePath.Value;
-            //var path = Server.MapPath(imagePath.Value);
-            //path = path.Replace("\\", "/");
-            return View(null,null,path);
-        }
+
+
     }
 }
