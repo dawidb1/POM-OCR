@@ -13,22 +13,17 @@ namespace POM_OCR.Models
 {
     public class ImageToRectangles
     {
-        Image<Bgr, Byte> img;
-        List<Emgu.CV.Image<Bgr,Byte>> resultList;
-        static int counter;
-        static int enumCounter;
+     
+        static List<Emgu.CV.Image<Bgr,Byte>> resultList;
 
-        void doMagic(string path)
+        public static List<Emgu.CV.Image<Bgr,Byte>> GetRectangles(string path)
         {
-            //string middle = @"\Image\";
-            //string root = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-            //string path = $"{root}{middle}{fileName}";
-
-            img = new Image<Bgr, Byte>(path);
-            DetectText(img);
+            Image<Bgr, Byte> img = new Image<Bgr, byte>(path);
+            return DetectText(img);
         }
 
-        private void DetectText(Image<Bgr, byte> img)
+
+        private static List<Emgu.CV.Image<Bgr, Byte>> DetectText(Image<Bgr, byte> img)
         {
             /*
              1. Edge detection (sobel)
@@ -65,6 +60,7 @@ namespace POM_OCR.Models
                     resultList.Add(mask);
                 }
             }
+            return resultList;
         }
     }
 

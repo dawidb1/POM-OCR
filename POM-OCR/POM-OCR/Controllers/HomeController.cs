@@ -25,6 +25,7 @@ namespace POM_OCR.Controllers
             string extension = Path.GetExtension(imageModel.ImageFile.FileName);
             fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
             imageModel.ImagePath = "~/Image/" + fileName;
+
             fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
             imageModel.ImageFile.SaveAs(fileName);
 

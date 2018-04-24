@@ -1,4 +1,4 @@
-﻿@model IronOcr.OcrResult
+﻿@model List<IronOcr.OcrResult>
 @{
     ViewBag.Title = "OcrImage";
 }
@@ -14,7 +14,11 @@
 
 <h2>OcrImage</h2>
 <div>
-    <p id="pstyle" style="font-size:12px">@Model</p>
+    @foreach (var item in Model)
+    {
+        <p id="pstyle" style="font-size:12px">@item</p>
+    }
+
 </div>
 <div>
     <button type="button" style="margin:20px; font-size:x-large" onclick="changeFont();">Make bigger</button>
