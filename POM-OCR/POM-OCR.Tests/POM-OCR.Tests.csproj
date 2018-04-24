@@ -99,9 +99,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\POM-OCR\POM-OCR.csproj">
+    <ProjectReference Include="..\POM-OCR\POM-OCR General.csproj">
       <Project>{ADF76610-826C-498B-8A19-5D850574DF2E}</Project>
-      <Name>POM-OCR</Name>
+      <Name>POM-OCR General</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

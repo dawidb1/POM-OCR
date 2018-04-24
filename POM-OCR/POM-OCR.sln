@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POM-OCR", "POM-OCR\POM-OCR.csproj", "{ADF76610-826C-498B-8A19-5D850574DF2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POM-OCR General", "POM-OCR\POM-OCR General.csproj", "{ADF76610-826C-498B-8A19-5D850574DF2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POM-OCR.Tests", "POM-OCR.Tests\POM-OCR.Tests.csproj", "{DA5F7C3D-DD8A-4974-BCD3-9A386FBC4425}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "text region detection", "text region detection\text region detection.csproj", "{374C40E6-12E5-4F39-B251-991D90DBE880}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Region_Detection", "text region detection\Region_Detection.csproj", "{374C40E6-12E5-4F39-B251-991D90DBE880}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
