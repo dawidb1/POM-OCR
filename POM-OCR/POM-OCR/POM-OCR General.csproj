@@ -207,6 +207,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\ImageProcessing\OpenImage.cshtml" />
     <Content Include="Views\ImageProcessing\OcrImage.cshtml" />
+    <Content Include="Views\Home\Indexv2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

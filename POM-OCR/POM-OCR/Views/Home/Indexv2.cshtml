@@ -1,0 +1,18 @@
+﻿@Model
+@{
+    ViewBag.Title = "Indexv2";
+}
+
+<h2>Indexv2</h2>
+
+<head><b>Hej, przetworzymy twoje skany na łatwy do czytania tekst w html !</b></head>
+
+<body>
+<b>Wczytaj plik w formacie pdf lub jpg</b>
+<input type="file" name="Wybierz Plik">
+<button type="button" name="Upload_Button" formtarget="_self">Wczytaj plik</button>
+@*<img src="obrazek.jpg" alt="My Image">*@
+<button type="button" name="Cropimages_Button" formtarget="_self">Zaznacz obrazy w skanie</button>
+<b>Wszystko gotowe?</b>
+<button type="button" name="Process_Button" formtarget="_self">Przetwórz skan</button>
+</body>
