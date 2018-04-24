@@ -31,7 +31,6 @@ namespace text_region_detection
         static int enumCounter;
         public MainWindow()
         {
-
             InitializeComponent();
             string fileName = "test0.jpg";
             enumCounter++;

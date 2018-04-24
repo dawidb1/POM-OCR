@@ -1,0 +1,15 @@
+﻿
+@model string
+@{
+   // ViewBag.Title = "OpenImage";
+}
+
+<h2>OpeImage</h2>
+<h3>Choose boxes with text for better results</h3>
+<div>
+    <p>Path: @Model</p>
+    <img src="@Url.Content(Model)" alt="Image" height="500" />
+</div>
+<div>
+    <button style="font-size:x-large"> @Html.ActionLink("OcrImage", "OcrImage", "ImageProcessing")</button>
+</div>
