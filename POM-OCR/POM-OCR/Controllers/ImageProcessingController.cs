@@ -38,7 +38,6 @@ namespace POM_OCR.Controllers
 
             List<Emgu.CV.Image<Bgr, Byte>> rectangles = ImageToRectangles.GetRectangles(path);
 
-
             foreach (var item in rectangles)
             {
                 // zapis Image do folderu
