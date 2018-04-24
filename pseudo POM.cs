@@ -22,11 +22,12 @@ void displayFile(mainImage);
 {
 //DANIEL
 (
+    // Ta wersja!!!!
 void onButtonSelectPicturesClick(Image file){
     Field selectPicturesInImage(file);
     List<image> copyPictureToList(file, field);
 }
-OR
+//OR to jednak nie
 List<Image>,List<field> detectPictures(Image file);
 );
 
