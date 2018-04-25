@@ -22,19 +22,3 @@ select,
 textarea {
     max-width: 280px;
 }
-
-.preview {
-    overflow: hidden;
-    width: 20px;
-    height: 200px;
-}
-
-
-.map-point {
-    width: 16px;
-    height: 16px;
-    border-radius: 4px;
-    background-color: red;
-    position: absolute;
-    z-index: 5000;
-}
