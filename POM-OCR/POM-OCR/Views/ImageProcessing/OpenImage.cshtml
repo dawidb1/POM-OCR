@@ -6,16 +6,24 @@
 
 <h2>Free your text</h2>
 <h3>Choose boxes with images for better results</h3>
+<p>Path: @Model</p>
+
 <div>
-    <p>Path: @Model</p>
     <img id="image" src="@Url.Content(Model)" alt="Image" height="500" />
 </div>
+@*<div class="map-point">This is in foreground</div>*@
+
 <div id="submitOrDeny" class="container">
     <div class="form-group">
-            <button id="submit" type="button" class="btn btn-success">OK</button>
-            <button id="deny" type="button" class="btn btn-danger">NOT OK</button>
+        <button id="submit" type="button" class="btn btn-success">OK</button>
+        <button id="deny" type="button" class="btn btn-danger">NOT OK</button>
     </div>
 </div>
+
+<div class="col col-3">
+    <div class="preview"></div>
+</div>
+
 <div>
     <button style="font-size:x-large"> @Html.ActionLink("OcrImage", "OcrImage", "ImageProcessing")</button>
 </div>
@@ -26,12 +34,13 @@
 <script type="text/javascript">
 
     var image = document.getElementById('image');
-  
+
     var cropper = new Cropper(image, {
         aspectRatio: NaN,
         zoomable: false,
         autoCrop: false,
         scalable: true,
+        checkCrossOrigin: true,
         crop: function (event) {
             console.log(event.detail.x);
             console.log(event.detail.y);
@@ -57,12 +66,30 @@
         $("#submit").click(function () {
             cropper.crop();
             var data = cropper.getData(true);
-            alert("x: " + data.x + ", y: " + data.y + ", width: " + data.width + ", height: " + data.height);
+
+
+            var map = $('#map_wrapper');
+            var point = $('<div class="map-point"></div>');
+            var x = data.x;
+            var y = data.y;
+
+            point.css({
+                left: x + "px",
+                top: y + "px"
+            });
+            point.appendTo(map);
+
+            cropper.clear();
+            $("#submitOrDeny").hide();
         });
 
         $("#deny").click(function () {
             cropper.clear();
             $("#submitOrDeny").hide();
         });
+    }
+
+    function marker(ev) {
+        ev.preventDefault();
     }
 </script>
