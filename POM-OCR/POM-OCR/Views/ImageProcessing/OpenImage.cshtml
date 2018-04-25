@@ -4,11 +4,17 @@
     // ViewBag.Title = "OpenImage";
 }
 
-<h2>OpeImage</h2>
-<h3>Choose boxes with text for better results</h3>
+<h2>Free your text</h2>
+<h3>Choose boxes with images for better results</h3>
 <div>
     <p>Path: @Model</p>
     <img id="image" src="@Url.Content(Model)" alt="Image" height="500" />
+</div>
+<div id="submitOrDeny" class="container">
+    <div class="form-group">
+            <button id="submit" type="button" class="btn btn-success">OK</button>
+            <button id="deny" type="button" class="btn btn-danger">NOT OK</button>
+    </div>
 </div>
 <div>
     <button style="font-size:x-large"> @Html.ActionLink("OcrImage", "OcrImage", "ImageProcessing")</button>
@@ -18,9 +24,14 @@
 <script src="~/Scripts/cropper.js"></script>
 
 <script type="text/javascript">
+
     var image = document.getElementById('image');
+  
     var cropper = new Cropper(image, {
-        aspectRatio: 16 / 9,
+        aspectRatio: NaN,
+        zoomable: false,
+        autoCrop: false,
+        scalable: true,
         crop: function (event) {
             console.log(event.detail.x);
             console.log(event.detail.y);
@@ -31,4 +42,27 @@
             console.log(event.detail.scaleY);
         }
     });
+
+    window.onload = hide;
+
+    image.addEventListener('cropend', function (event) {
+        $("#submitOrDeny").show();
+        console.log(event.detail.originalEvent);
+        console.log(event.detail.action);
+    });
+
+    function hide() {
+        $("#submitOrDeny").hide();
+
+        $("#submit").click(function () {
+            cropper.crop();
+            var data = cropper.getData(true);
+            alert("x: " + data.x + ", y: " + data.y + ", width: " + data.width + ", height: " + data.height);
+        });
+
+        $("#deny").click(function () {
+            cropper.clear();
+            $("#submitOrDeny").hide();
+        });
+    }
 </script>

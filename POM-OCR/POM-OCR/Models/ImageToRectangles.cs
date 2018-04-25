@@ -60,6 +60,7 @@ namespace POM_OCR.Models
                     resultList.Add(mask);
                 }
             }
+            resultList.Reverse();
             return resultList;
         }
     }
