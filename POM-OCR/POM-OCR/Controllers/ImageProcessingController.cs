@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
+using System.Drawing;
 using POM_OCR.Models;
 
 namespace POM_OCR.Controllers
@@ -30,7 +31,7 @@ namespace POM_OCR.Controllers
 
         public ActionResult OcrImage()
         {
-            List<OcrResult> ocrResults = new List<OcrResult>();
+            List<OcrResult> OcrResults = new List<OcrResult>();
 
             HttpCookie imagePath = Request.Cookies["ImageTestCookie"];
             var path = Server.MapPath(imagePath.Value);
@@ -43,15 +44,15 @@ namespace POM_OCR.Controllers
                 // zapis Image do folderu
                 // wyciągnięcie ścieżki do obrazu
                 // string path = ....
-                
-                ocrResults.Add(DoOcr(path));
+                var bitmap = item.ToBitmap();
+                var ocrResult = DoOcr(bitmap);
+                OcrResults.Add(ocrResult);
             }
 
-            return View(ocrResults);
-            //
+            return View(OcrResults);
         }
 
-        OcrResult DoOcr(string path)
+        OcrResult DoOcr(Bitmap bitmap)
         {
             var Ocr = new AdvancedOcr()
             {
@@ -68,17 +69,7 @@ namespace POM_OCR.Controllers
                 ColorDepth = 4
             };
             
-            OcrResult Result;
-            if (Path.GetExtension(path) == "pdf")
-            {
-                Result = Ocr.ReadPdf(path);
-            }
-            else Result = Ocr.Read(path);
-
-            return Result;
+            return Ocr.Read(bitmap);
         }
-
-
-
     }
 }

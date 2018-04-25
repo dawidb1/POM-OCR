@@ -4,19 +4,19 @@
 }
 <script type="text/javascript">
     function changeFont() {
-        var size = document.getElementById('pstyle').style.fontSize;
+        var size = document.getElementByClassName('pstyle').style.fontSize;
         var number = size.substring(0, 2);
         var numberInt = parseInt(number);
         numberInt += 2;
-        document.getElementById('pstyle').style.fontSize = numberInt + 'px';
+        document.getElementByClassName('pstyle').style.fontSize = numberInt + 'px';
     }
 </script>
 
 <h2>OcrImage</h2>
-<div>
+<div id="fonter">
     @foreach (var item in Model)
     {
-        <p id="pstyle" style="font-size:12px">@item</p>
+        <p class="pstyle" style="font-size:12px">@item</p>
     }
 
 </div>
