@@ -9,7 +9,9 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
 using System.Drawing;
+using System.Web.Script.Serialization;
 using POM_OCR.Models;
+using POM_OCR.Models.ViewModels;
 
 namespace POM_OCR.Controllers
 {
@@ -29,30 +31,73 @@ namespace POM_OCR.Controllers
             return View();
         }
 
-        public ActionResult OcrImage()
+        public ActionResult _OcrImage(ICollection<CropperViewModel> CropList)
         {
             List<OcrResult> OcrResults = new List<OcrResult>();
 
+
             HttpCookie imagePath = Request.Cookies["ImageTestCookie"];
             var path = Server.MapPath(imagePath.Value);
-            ViewBag.Path = imagePath.Value.ToString();
+            ViewBag.Path = imagePath.Value.ToString(); 
 
-            List<Emgu.CV.Image<Bgr, Byte>> rectangles = ImageToRectangles.GetRectangles(path);
+            var image = ImageToRectangles.RemovePictures(path, (List<CropperViewModel>)CropList);
+            //var bitmapBytes =ImageToRectangles.BitmapToBytes(image.ToBitmap()); //Convert bitmap into a byte array
+            var test = CropList.First();
+            //return Json(bitmapBytes); //Return as file result 
 
-            foreach (var item in rectangles)
-            {
-                // zapis Image do folderu
-                // wyciągnięcie ścieżki do obrazu
-                // string path = ....
-                var bitmap = item.ToBitmap();
-                var ocrResult = DoOcr(bitmap);
-                OcrResults.Add(ocrResult);
-            }
+            //var truebytes = new byte[bytes.Length];
+            //for (int i = 0; i < bytes.Length; i++)
+            //{
+            //    truebytes[i] = (byte)bytes[i];
+            //}
 
-            return View(OcrResults);
+            //Bitmap bitmap1;
+
+            //using (MemoryStream ms = new MemoryStream(truebytes))
+            //{
+            //    bitmap1 = new Bitmap(ms);
+            //}
+            //var image = new Emgu.CV.Image<Bgr, Byte>(bitmap1);
+
+            //#region image to rectangles
+            //List<Emgu.CV.Image<Bgr, Byte>> rectangles = ImageToRectangles.GetRectangles(image);
+
+            //foreach (var item in rectangles)
+            //{
+            //    // zapis Image do folderu
+            //    // wyciągnięcie ścieżki do obrazu
+            //    // string path = ....
+            //    var bitmap = item.ToBitmap();
+            //    var ocrResult = DoOcr(bitmap);
+            //    OcrResults.Add(ocrResult);
+            //}
+
+
+
+            ////return Json(RenderViewToString PartialView());
+            ////var qs = HttpUtility.ParseQueryString("");
+            //string qs = "";
+            //OcrResults.ForEach(x => qs += "<br>" + x.Text);
+            //#endregion
+            var temp = DoOcr(image.ToBitmap());
+
+
+            //return Json(Url.Action("PartialViewSample",qs));
+            return Json(new { Url = Url.Action("PartialViewSample"), Data = temp.Text});
+        }
+
+        public ActionResult PartialViewSample()
+        {
+            return PartialView();
         }
 
         OcrResult DoOcr(Bitmap bitmap)
+        {
+            var Ocr = new AutoOcr();
+            
+            return Ocr.Read(bitmap);
+        }
+        OcrResult DoAdvancedOcr(Bitmap bitmap)
         {
             var Ocr = new AdvancedOcr()
             {
@@ -68,7 +113,6 @@ namespace POM_OCR.Controllers
                 ReadBarCodes = false,
                 ColorDepth = 4
             };
-            
             return Ocr.Read(bitmap);
         }
     }

@@ -7,7 +7,7 @@ using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
 using System.Drawing;
 using System.IO;
-
+using POM_OCR.Models.ViewModels;
 
 namespace POM_OCR.Models
 {
@@ -16,12 +16,45 @@ namespace POM_OCR.Models
      
         static List<Emgu.CV.Image<Bgr,Byte>> resultList;
 
-        public static List<Emgu.CV.Image<Bgr,Byte>> GetRectangles(string path)
+        public static List<Emgu.CV.Image<Bgr,Byte>> GetRectangles(Image<Bgr, Byte> img)
         {
-            Image<Bgr, Byte> img = new Image<Bgr, byte>(path);
+            //Image<Bgr, Byte> img = new Image<Bgr, byte>(path);
             return DetectText(img);
         }
 
+        public static Emgu.CV.Image<Bgr, Byte> RemovePictures(string path, List<CropperViewModel> CropperList)
+        {
+            var image1 = new Emgu.CV.Image<Bgr, Byte>(path);
+            var newImage = image1.Copy();
+
+            foreach (var cropper in CropperList)
+            {
+                //setPixelsWhite(ref image1, cropper);
+                for (int v = cropper.Y; v < cropper.Height+cropper.Y; v++)
+                {
+                    for (int u = cropper.X; u < cropper.Width+cropper.X; u++)
+                    {
+                        newImage.Data[v, u, 0] = 0; //Set Pixel Color | fast way
+                        newImage.Data[v, u, 1] = 0; //Set Pixel Color | fast way
+                        newImage.Data[v, u, 2] = 0; //Set Pixel Color | fast way
+                    }
+                }
+            }
+            return newImage;
+        }
+
+        private static void setPixelsWhite(ref Emgu.CV.Image<Bgr, Byte> image, CropperViewModel cropper)
+        {
+            for (int v = cropper.Y; v < cropper.Height; v++)
+            {
+                for (int u = cropper.X; u < cropper.Width; u++)
+                {
+                    image.Data[v, u, 0] = 0; //Set Pixel Color | fast way
+                    image.Data[v, u, 1] = 0; //Set Pixel Color | fast way
+                    image.Data[v, u, 2] = 0; //Set Pixel Color | fast way
+                }
+            }
+        }
 
         private static List<Emgu.CV.Image<Bgr, Byte>> DetectText(Image<Bgr, byte> img)
         {
@@ -62,6 +95,15 @@ namespace POM_OCR.Models
             }
             resultList.Reverse();
             return resultList;
+        }
+
+        public static byte[] BitmapToBytes(Bitmap img)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                return stream.ToArray();
+            }
         }
     }
 
