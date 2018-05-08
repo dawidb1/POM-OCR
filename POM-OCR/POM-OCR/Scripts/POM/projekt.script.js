@@ -50,13 +50,10 @@ $('#makeOcr').click(function () {
 		data: JSON.stringify(CropList),
 		success: function (url) {
 			$.post(url.Url, function (partial) {
-				//$(".load-image").hide();
-				$(".pointer").hide();
-				$("#result-div").html(partial);
-                $("#result-div").append(`<p class="text_result">${url.Data}</p>`);
+                $("#result-div").html(partial);
+                $("#result_child").append(`<p class="text_result">${url.Data}</p>`);
                 resultViewInit();
 			});
-			//goOcrImage(data);
 		},
 		error: function (data) {
 			alert('error!');
@@ -76,15 +73,19 @@ function resultViewInit() {
     $('#font_up').click(fontUp);
     $('#font_down').click(fontDown);
     $("#hide_file").click(hideFile);
+
+    hideFile();
 };
 
 function hideFile() {
     $('.load-image').toggle();
     if ($('.load-image').is(":hidden")) {
         $('#hide_file').html('Show file');
+        $(".pointer").hide();
     }
     else {
         $('#hide_file').html('Hide file');
+        $(".pointer").show();
     }
  
 };
