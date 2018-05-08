@@ -27,20 +27,24 @@ namespace POM_OCR.Models
             var image1 = new Emgu.CV.Image<Bgr, Byte>(path);
             var newImage = image1.Copy();
 
-            foreach (var cropper in CropperList)
+            if (CropperList!=null)
             {
-                //setPixelsWhite(ref image1, cropper);
-                for (int v = cropper.Y; v < cropper.Height+cropper.Y; v++)
+                foreach (var cropper in CropperList)
                 {
-                    for (int u = cropper.X; u < cropper.Width+cropper.X; u++)
+                    //setPixelsWhite(ref image1, cropper);
+                    for (int v = cropper.Y; v < cropper.Height + cropper.Y; v++)
                     {
-                        newImage.Data[v, u, 0] = 0; //Set Pixel Color | fast way
-                        newImage.Data[v, u, 1] = 0; //Set Pixel Color | fast way
-                        newImage.Data[v, u, 2] = 0; //Set Pixel Color | fast way
+                        for (int u = cropper.X; u < cropper.Width + cropper.X; u++)
+                        {
+                            newImage.Data[v, u, 0] = 0; //Set Pixel Color | fast way
+                            newImage.Data[v, u, 1] = 0; //Set Pixel Color | fast way
+                            newImage.Data[v, u, 2] = 0; //Set Pixel Color | fast way
+                        }
                     }
                 }
+                return newImage;
             }
-            return newImage;
+            else return image1;
         }
 
         private static void setPixelsWhite(ref Emgu.CV.Image<Bgr, Byte> image, CropperViewModel cropper)

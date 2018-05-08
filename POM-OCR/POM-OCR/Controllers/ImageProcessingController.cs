@@ -42,7 +42,6 @@ namespace POM_OCR.Controllers
 
             var image = ImageToRectangles.RemovePictures(path, (List<CropperViewModel>)CropList);
             //var bitmapBytes =ImageToRectangles.BitmapToBytes(image.ToBitmap()); //Convert bitmap into a byte array
-            var test = CropList.First();
             //return Json(bitmapBytes); //Return as file result 
 
             //var truebytes = new byte[bytes.Length];
@@ -79,14 +78,14 @@ namespace POM_OCR.Controllers
             //string qs = "";
             //OcrResults.ForEach(x => qs += "<br>" + x.Text);
             //#endregion
-            var temp = DoOcr(image.ToBitmap());
+            var ocrResult = DoOcr(image.ToBitmap());
 
 
             //return Json(Url.Action("PartialViewSample",qs));
-            return Json(new { Url = Url.Action("PartialViewSample"), Data = temp.Text});
+            return Json(new { Url = Url.Action("Result"), Data = ocrResult.Text});
         }
 
-        public ActionResult PartialViewSample()
+        public ActionResult Result()
         {
             return PartialView();
         }

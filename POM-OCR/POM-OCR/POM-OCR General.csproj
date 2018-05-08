@@ -209,7 +209,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\ImageProcessing\OpenImage.cshtml" />
     <Content Include="Views\ImageProcessing\_OcrImage.cshtml" />
-    <Content Include="Views\ImageProcessing\PartialViewSample.cshtml" />
+    <Content Include="Views\ImageProcessing\Result.cshtml" />
+    <Content Include="Scripts\POM\projekt.script.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

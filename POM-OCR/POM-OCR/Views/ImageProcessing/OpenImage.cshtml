@@ -1,174 +1,44 @@
-﻿
-@model string
-@{
-    // ViewBag.Title = "OpenImage";
-}
+﻿@model string
 
-<div class="load-image">
+<div class="load-image"> @*it is collapsed after OCR*@
     <h2>Free your text</h2>
-    <h3>Choose boxes with images for better results</h3>
-    <p>Path: @Model</p>
+    <h3>Choose images/text which you don't want to read.</h3>
 
     <div class="row">
-        <div id="image_div" class="col-md-8 col-md-offset-2">
+        <div id="image_div" class="image_div col-md-8 col-md-offset-2">
             <img style="max-width: 100%;" id="image" src="@Url.Content(Model)" alt="Image" />
         </div>
 
-        <div class="container col-md-4 col-md-offset-2">
-            <div id="submitOrDeny">
-                <div class="form-group">
-                    <button id="submit" type="button" class="btn btn-success">OK</button>
-                    <button id="deny" type="button" class="btn btn-danger">NOT OK</button>
+        <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-6">
+                <div  id="submitOrDeny">
+                    <div class="col-md-6">
+                        <button id="submit" type="button" class="btn btn-success btn-block">Ok</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button id="deny" type="button" class="btn btn-danger btn-block">Not ok</button>
+                    </div>
                 </div>
             </div>
+            <div class="col-md-3">
+                <button id="refresh" type="reset" class="btn btn-default btn-block">
+                    <span class="glyphicon glyphicon-refresh"></span> Refresh
+                </button>
+            </div>
+            <div class="col-md-3">
+                <button id="makeOcr" type="button"  class="btn btn-primary btn-block"> Go!</button>
+            </div>
         </div>
-
-        <div class="col-md-4">
-            <button id="makeOcr" class="btn btn-lg btn-block"> Make readable!</button>
-        </div>
-
     </div>
 </div>
-<div id="blabla">
-    <p>cokolwiek</p>
-</div>
+
+    <div id="result-div">
+        @*results are loaded here*@
+
+    </div>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <link href="~/Content/cropper.css" rel="stylesheet" />
 <script src="~/Scripts/cropper.js"></script>
-
-<script type="text/javascript">
-
-    var image = document.getElementById('image');
-    var CropList = new Array();
-
-    var cropper = new Cropper(image, {
-        aspectRatio: NaN,
-        zoomable: false,
-        autoCrop: false,
-        scalable: false,
-        checkCrossOrigin: false,
-        background: true,
-        movable: false,
-        crop: function (event) {
-            console.log(event.detail.x);
-            console.log(event.detail.y);
-            console.log(event.detail.width);
-            console.log(event.detail.height);
-            console.log(event.detail.rotate);
-            console.log(event.detail.scaleX);
-            console.log(event.detail.scaleY);
-        }
-    });
-
-    window.onload = $("#submitOrDeny").hide();
-
-    var globX, globY;
-
-    var imagex0;
-    var imagey0;
-
-    image.addEventListener('cropend', function (event) {
-        $(document).on("click", function (event) {
-            globX = event.pageX;
-            globY = event.pageY;
-        });
-
-        $("#submitOrDeny").show();
-
-        console.log(event.detail.originalEvent);
-        console.log(event.detail.action);
-    });
-
-    
-    $('#makeOcr').click(function () {
-       
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            url: '@(Url.Action("_OcrImage"))',
-            data: JSON.stringify(CropList),
-            success: function (url) {
-                $.post(url.Url, function (partial) {
-                    $(".load-image").hide();
-                    $(".pointer").hide();
-                    $("#blabla").html(partial);
-                    $("#blabla").append(`<p>${url.Data}</p>`);
-                });
-                //goOcrImage(data);
-            },
-            error: function (data) {
-                alert('error!');
-            },
-        });
-        
-    });
-
-    @*function goOcrImage(bytes) {
-        alert(bytes);
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            url: "@(Url.Action("OcrImage"))",
-            data: JSON.stringify(bytes), 
-            success: function (bla) {
-                alert('succes sent bytes!');
-                $('#blabla').html(bla);
-            },
-            error: function (bla) {
-                alert('error22222!');
-            },
-        });
-    }*@
-
-    $("#submit").click(function () {
-        cropper.crop();
-        var data = cropper.getData(true);
-
-        $("#submitOrDeny").hide();
-
-        var image = cropper.getData(true);
-        var originalImage = cropper.getImageData();
-
-        var scale = originalImage.width / originalImage.naturalWidth;
-
-        var cssLeftPoint = (globX - scale * image.width);
-        var cssTopPoint = (globY - scale * image.height);
-
-        var sizeX = scale * image.width;
-        var sizeY = scale * image.height;
-
-        var color = '#00ff00';
-        $("body").append(
-            $('<div class="pointer"></div>')
-                .css('position', 'absolute')
-                .css('top', cssTopPoint + 'px')
-                .css('left', cssLeftPoint + 'px')
-                .css('width', sizeX)
-                .css('height', sizeY)
-                .css('background-color', color)
-                .css('opacity', 0.5)
-        );
-
-        pushToCropList(image.x, image.y, image.width, image.height);
-        cropper.clear();
-    });
-
-    $("#deny").click(function () {
-        cropper.clear();
-        $("#submitOrDeny").hide();
-    });
-
-    function pushToCropList(left, top, width, height) {
-        //alert(`left: ${left}, top: ${top},Width: ${width},Height: ${height}`);
-        var point = {
-            X: left,
-            Y: top,
-            Width: width,
-            Height: height
-        };
-        CropList.push(point);
-    }
-</script>
+<script src="~/Scripts/POM/projekt.script.js"></script>
+@*this page is using scripts hard!*@
