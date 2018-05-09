@@ -22,6 +22,8 @@ namespace POM_OCR.Controllers
             HttpCookie imagePath = Request.Cookies["ImageTestCookie"];
             var path = imagePath.Value;
 
+
+
             return View(null, null, path);
         }
 
