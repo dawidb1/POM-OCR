@@ -24,7 +24,7 @@ namespace POM_OCR.Controllers
 
 
 
-            return View(null, null, path);
+            return View(null, null);
         }
 
         // GET: ImageProcessing

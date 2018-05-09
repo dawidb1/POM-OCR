@@ -20,7 +20,8 @@ namespace POM_OCR.Controllers
         {
             return View();
         }
-        public ActionResult Add(HttpPostedFileBase file)
+
+        public ActionResult Add(HttpPostedFileBase files)
         {
             //string fileName = Path.GetFileNameWithoutExtension(imageModel.ImageFile.FileName);
             //string extension = Path.GetExtension(imageModel.ImageFile.FileName);
@@ -30,29 +31,29 @@ namespace POM_OCR.Controllers
             //fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
             //imageModel.ImageFile.SaveAs(fileName);
 
-
-       
+            var stream = files.InputStream;
+            byte[] imageByte = new byte[stream.Length];
+            stream.Read(imageByte, 0, imageByte.Length);
 
             //var fileKey = Guid.NewGuid();
             //var fileStream = new Byte[Request.Files[0].ContentLength];
             //Request.Files[0].InputStream.Read(fileStream, 0, Request.Files[0].ContentLength);
             //Cache[fileKey.ToString()] = fileStream;
             //string FolderPath = System.Configuration.ConfigurationManager.AppSettings["PATH"].ToString();
-            string serverPath = @"http://textdetection.azurewebsites.net/";
-            string fileName = file.FileName;
-            string assoid = "dawid";
-      
-            string imagePath = serverPath + assoid;
-            file.SaveAs(imagePath);
+            //string serverPath = @"http://textdetection.azurewebsites.net/";
+            //string fileName = file.FileName;
+            //string assoid = "dawid";
 
-            HttpCookie imageCookie = new HttpCookie("ImageTestCookie");
-            imageCookie.Value = imagePath;
-            Response.Cookies.Add(imageCookie);
+            //string imagePath = serverPath + assoid;
+            //file.SaveAs(imagePath);
+
+            //HttpCookie imageCookie = new HttpCookie("ImageTestCookie");
+            //imageCookie.Value = imagePath;
+            //Response.Cookies.Add(imageCookie);
 
             //face_crop_original.Src = imagePath + "?" + DateTime.Now;
 
-
-            return RedirectToAction("OpenImage","ImageProcessing");
+            return File(stream, "image/jpeg");
         }
 
        
