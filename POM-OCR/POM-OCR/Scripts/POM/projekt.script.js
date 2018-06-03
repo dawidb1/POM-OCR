@@ -55,10 +55,21 @@ $('#makeOcr').click(function () {
 		contentType: "application/json; charset=utf-8",
 		url:  "_OcrImage",
 		data: JSON.stringify(CropList),
-		success: function (url) {
-			$.post(url.Url, function (partial) {
+		success: function (data) {
+			$.post(data.Url, function (partial) {
                 $("#result-div").html(partial);
-                $("#result_child").append(`<p class="text_result">${url.Data}</p>`);
+                $("#text_result").append(data.Text);
+               
+                var quill = new Quill('#text_result', {
+                    theme: 'snow'
+                });
+
+                $("#to_html").click(function () {
+                    var text = quill.root.innerHTML;
+                    $('div.ql-toolbar').hide();
+                    $("#text_result").hide();
+                    $('#html_text').append(text);
+                });
                 resultViewInit();
 			});
 		},
@@ -101,11 +112,11 @@ function hideFile() {
 };
 function fontUp() {
     numberInt += FONT_STEP;
-    $('p.text_result').css('font-size', numberInt);
+    $('#html_text > *').css('font-size', numberInt);
 }
 function fontDown() {
     numberInt -= FONT_STEP;
-    $('p.text_result').css('font-size', numberInt);
+    $('#html_text > *').css('font-size', numberInt);
 }
 
 

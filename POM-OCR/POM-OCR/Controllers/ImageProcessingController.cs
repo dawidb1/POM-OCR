@@ -82,7 +82,7 @@ namespace POM_OCR.Controllers
 
 
             //return Json(Url.Action("PartialViewSample",qs));
-            return Json(new { Url = Url.Action("Result"), Data = ocrResult.Text});
+            return Json(new { Url = Url.Action("Result"), Text = ocrResult.Text});
         }
 
         public ActionResult Result()
