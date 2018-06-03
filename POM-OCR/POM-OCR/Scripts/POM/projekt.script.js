@@ -4,23 +4,27 @@ var CropList = new Array();
 var cropper = new Cropper(image, {
 	aspectRatio: NaN,
 	zoomable: false,
-	autoCrop: false,
-	scalable: false,
-	checkCrossOrigin: false,
-	background: true,
-	movable: false,
+    autoCrop: false,
+    scalable: true,
+    checkCrossOrigin: false,
+    background: true,
+    movable: false,
 	crop: function (event) {
-		console.log(event.detail.x);
-		console.log(event.detail.y);
-		console.log(event.detail.width);
-		console.log(event.detail.height);
-		console.log(event.detail.rotate);
-		console.log(event.detail.scaleX);
-		console.log(event.detail.scaleY);
+		//console.log(event.detail.x);
+		//console.log(event.detail.y);
+		//console.log(event.detail.width);
+		//console.log(event.detail.height);
+		//console.log(event.detail.rotate);
+		//console.log(event.detail.scaleX);
+		//console.log(event.detail.scaleY);
 	}
 });
 
 window.onload = $("#submitOrDeny").hide();
+$(window).resize(function () {
+    console.log("resized");
+    $('.pointer').remove();
+});
 
 var globX, globY;
 
@@ -34,9 +38,6 @@ image.addEventListener('cropend', function (event) {
 	});
 
 	$("#submitOrDeny").show();
-
-	console.log(event.detail.originalEvent);
-	console.log(event.detail.action);
 });
 
     
@@ -62,9 +63,9 @@ $('#makeOcr').click(function () {
         
 });
 
-var THRESHOLD, numberInt;
+var FONT_STEP, numberInt;
 function resultViewInit() {
-    THRESHOLD = 2;
+    FONT_STEP = 2;
 
     var size = $('p').css('font-size');
     var number = size.substring(0, 2);
@@ -90,11 +91,11 @@ function hideFile() {
  
 };
 function fontUp() {
-    numberInt += THRESHOLD;
+    numberInt += FONT_STEP;
     $('p.text_result').css('font-size', numberInt);
 }
 function fontDown() {
-    numberInt -= THRESHOLD;
+    numberInt -= FONT_STEP;
     $('p.text_result').css('font-size', numberInt);
 }
 
@@ -104,26 +105,31 @@ $("#submit").click(function () {
 	var data = cropper.getData(true);
 
 	$("#submitOrDeny").hide();
-
 	var image = cropper.getData(true);
-	var originalImage = cropper.getImageData();
 
-	var scale = originalImage.width / originalImage.naturalWidth;
+    var container = cropper.getContainerData();
+    var canvas = cropper.getCanvasData();
 
-	var cssLeftPoint = (globX - scale * image.width);
-	var cssTopPoint = (globY - scale * image.height);
+    var offsetLeft = (container.width - canvas.width) / 2;
+    var offsetTop = (container.height - canvas.height) / 2;
+    console.log("blo");
+    console.log("bla: l "+ offsetLeft);
+    console.log("bla: top : " + offsetTop);
 
-	var sizeX = scale * image.width;
-	var sizeY = scale * image.height;
+    var cropBox = cropper.getCropBoxData();
+    var left = cropBox.left + offsetLeft;
+    var top = cropBox.top + offsetTop;
+    var height = cropBox.height;
+    var width = cropBox.width;
 
 	var color = '#00ff00';
-	$("body").append(
+    $("#image_div").append(
 		$('<div class="pointer"></div>')
 			.css('position', 'absolute')
-			.css('top', cssTopPoint + 'px')
-			.css('left', cssLeftPoint + 'px')
-			.css('width', sizeX)
-			.css('height', sizeY)
+            .css('top', top + 'px')
+            .css('left', left + 'px')
+            .css('width', width)
+            .css('height', height)
 			.css('background-color', color)
 			.css('opacity', 0.5)
 	);

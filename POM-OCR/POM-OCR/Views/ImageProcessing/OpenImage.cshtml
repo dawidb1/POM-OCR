@@ -1,17 +1,18 @@
 ﻿@model string
 
-<div class="load-image"> @*it is collapsed after OCR*@
+<div class="load-image">
+    @*it is collapsed after OCR*@
     <h2>Free your text</h2>
     <h3>Choose images/text which you don't want to read.</h3>
 
     <div class="row">
         <div id="image_div" class="image_div col-md-8 col-md-offset-2">
-            <img style="max-width: 100%;" id="image" src="@Url.Content(Model)" alt="Image" />
+            <img id="image" src="@Url.Content(Model)" alt="Image" />
         </div>
 
         <div class="col-md-8 col-md-offset-2">
             <div class="col-md-6">
-                <div  id="submitOrDeny">
+                <div id="submitOrDeny">
                     <div class="col-md-6">
                         <button id="submit" type="button" class="btn btn-success btn-block">Ok</button>
                     </div>
@@ -26,19 +27,20 @@
                 </button>
             </div>
             <div class="col-md-3">
-                <button id="makeOcr" type="button"  class="btn btn-primary btn-block"> Go!</button>
+                <button id="makeOcr" type="button" class="btn btn-primary btn-block"> Go!</button>
             </div>
         </div>
     </div>
 </div>
 
-    <div id="result-div">
-        @*results are loaded here*@
+<div id="result-div">
+    @*results are loaded here*@
 
-    </div>
+</div>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <link href="~/Content/cropper.css" rel="stylesheet" />
 <script src="~/Scripts/cropper.js"></script>
 <script src="~/Scripts/POM/projekt.script.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
 @*this page is using scripts hard!*@
