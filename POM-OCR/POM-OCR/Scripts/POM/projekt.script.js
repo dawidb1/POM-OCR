@@ -1,11 +1,12 @@
 ﻿var image = document.getElementById('image');
 var CropList = new Array();
+$("#submitOrDeny").hide();
 
 var cropper = new Cropper(image, {
 	aspectRatio: NaN,
 	zoomable: false,
     autoCrop: false,
-    scalable: true,
+    scalable: false,
     checkCrossOrigin: false,
     background: true,
     movable: false,
@@ -21,7 +22,6 @@ var cropper = new Cropper(image, {
 });
 
 window.onload = function() {
-    $("#submitOrDeny").hide();
     $body = $("body");
     $(document).on({
         ajaxStart: function () {
@@ -59,15 +59,18 @@ $('#makeOcr').click(function () {
 			$.post(data.Url, function (partial) {
                 $("#result-div").html(partial);
                 $("#text_result").append(data.Text);
-               
+                $(".font-buttons").hide();
                 var quill = new Quill('#text_result', {
                     theme: 'snow'
                 });
 
                 $("#to_html").click(function () {
+                    $(".font-buttons").show();
+                    $(this).hide();
                     var text = quill.root.innerHTML;
                     $('div.ql-toolbar').hide();
                     $("#text_result").hide();
+                    $("#header").hide();
                     $('#html_text').append(text);
                 });
                 resultViewInit();
@@ -132,9 +135,6 @@ $("#submit").click(function () {
 
     var offsetLeft = (container.width - canvas.width) / 2;
     var offsetTop = (container.height - canvas.height) / 2;
-    console.log("blo");
-    console.log("bla: l "+ offsetLeft);
-    console.log("bla: top : " + offsetTop);
 
     var cropBox = cropper.getCropBoxData();
     var left = cropBox.left + offsetLeft;
