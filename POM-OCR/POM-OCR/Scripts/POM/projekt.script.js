@@ -20,7 +20,16 @@ var cropper = new Cropper(image, {
 	}
 });
 
-window.onload = $("#submitOrDeny").hide();
+window.onload = function() {
+    $("#submitOrDeny").hide();
+    $body = $("body");
+    $(document).on({
+        ajaxStart: function () {
+            $body.addClass("loading");
+        },
+        ajaxStop: function () { $body.removeClass("loading"); }
+    });
+}
 $(window).resize(function () {
     console.log("resized");
     $('.pointer').remove();
@@ -39,12 +48,9 @@ image.addEventListener('cropend', function (event) {
 
 	$("#submitOrDeny").show();
 });
-
     
 $('#makeOcr').click(function () {
-       
-	$.ajax({
-		type: "POST",
+    $.post({
 		dataType: "json",
 		contentType: "application/json; charset=utf-8",
 		url:  "_OcrImage",
@@ -73,6 +79,7 @@ function resultViewInit() {
 
     $('#font_up').click(fontUp);
     $('#font_down').click(fontDown);
+    $("#show_file").click(hideFile);
     $("#hide_file").click(hideFile);
 
     hideFile();
@@ -81,11 +88,13 @@ function resultViewInit() {
 function hideFile() {
     $('.load-image').toggle();
     if ($('.load-image').is(":hidden")) {
-        $('#hide_file').html('Show file');
+        $('#hide_file').hide();
+        $('#show_file').show();
         $(".pointer").hide();
     }
     else {
-        $('#hide_file').html('Hide file');
+        $('#hide_file').show();
+        $('#show_file').hide();
         $(".pointer").show();
     }
  

@@ -2,6 +2,11 @@
     padding-top: 50px;
     padding-bottom: 20px;
 }
+*,
+h2,
+h3{
+    font-family: 'Muli', sans-serif;
+}
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -24,4 +29,38 @@ textarea {
 }
 img{
     max-width: 100%;
+}
+.btn-block {
+    font-size: 18px; /* Set a font size */
+    text-align: left;
+    padding-left: 20px;
+    font-family: 'Muli', sans-serif;
+    margin:10px 10px;
+}
+.glyphicon{
+    float:right;
+    margin-right:20px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba( 255, 255, 255, .8 ) url('http://sampsonresume.com/labs/pIkfp.gif') 50% 50% no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
 }
