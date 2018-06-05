@@ -12,24 +12,32 @@ var cropper = new Cropper(image, {
     movable: false,
 	crop: function (event) {
 		//console.log(event.detail.x);
-		//console.log(event.detail.y);
-		//console.log(event.detail.width);
-		//console.log(event.detail.height);
-		//console.log(event.detail.rotate);
-		//console.log(event.detail.scaleX);
-		//console.log(event.detail.scaleY);
 	}
 });
 
-window.onload = function() {
+window.onload = function () {
     $body = $("body");
     $(document).on({
         ajaxStart: function () {
             $body.addClass("loading");
         },
-        ajaxStop: function () { $body.removeClass("loading"); }
+        ajaxStop: function () {
+            $body.removeClass("loading");
+        }
     });
-}
+};
+function loadingAnimation() {
+    $body = $("body");
+    $(document).on({
+        ajaxStart: function () {
+            $body.addClass("loading");
+        },
+        ajaxStop: function () {
+            $body.removeClass("loading");
+        }
+    });
+};
+
 $(window).resize(function () {
     console.log("resized");
     $('.pointer').remove();
@@ -78,7 +86,7 @@ $('#makeOcr').click(function () {
 		},
 		error: function (data) {
 			alert('error!');
-		},
+		}
 	});
         
 });
@@ -111,7 +119,6 @@ function hideFile() {
         $('#show_file').hide();
         $(".pointer").show();
     }
- 
 };
 function fontUp() {
     numberInt += FONT_STEP;
@@ -125,8 +132,6 @@ function fontDown() {
 
 $("#submit").click(function () {
 	cropper.crop();
-	var data = cropper.getData(true);
-
 	$("#submitOrDeny").hide();
 	var image = cropper.getData(true);
 
@@ -152,8 +157,20 @@ $("#submit").click(function () {
             .css('height', height)
 			.css('background-color', color)
 			.css('opacity', 0.5)
-	);
-
+    );
+    //validate data
+    //if (cropBox. + cropBox.height < container.height - offsetTop) {
+    //    cropBox.top 
+    //}
+    if (image.x < 0) {
+        var diff = 0 - image.x;
+        image.x = 0;
+        image.width -= diff;
+    }
+    if (image.x + image.width > canvas.width + offsetLeft) {
+        image.width = canvas.width + offsetLeft - image.x;
+    }
+    console.log(image.x, image.y, image.width, image.height);
 	pushToCropList(image.x, image.y, image.width, image.height);
 	cropper.clear();
 });

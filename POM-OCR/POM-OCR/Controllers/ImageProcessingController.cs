@@ -96,6 +96,7 @@ namespace POM_OCR.Controllers
             
             return Ocr.Read(bitmap);
         }
+
         OcrResult DoAdvancedOcr(Bitmap bitmap)
         {
             var Ocr = new AdvancedOcr()
