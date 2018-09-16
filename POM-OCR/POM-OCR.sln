@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POM-OCR.Tests", "POM-OCR.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Region_Detection", "text region detection\Region_Detection.csproj", "{374C40E6-12E5-4F39-B251-991D90DBE880}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PomyObraz", "C:\Users\Maciek\Documents\Visual Studio 2017\Projects\PomyObraz\PomyObraz\PomyObraz.csproj", "{EC241CE1-BC47-450E-BD0A-B08948469201}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{374C40E6-12E5-4F39-B251-991D90DBE880}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{374C40E6-12E5-4F39-B251-991D90DBE880}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{374C40E6-12E5-4F39-B251-991D90DBE880}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC241CE1-BC47-450E-BD0A-B08948469201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC241CE1-BC47-450E-BD0A-B08948469201}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC241CE1-BC47-450E-BD0A-B08948469201}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC241CE1-BC47-450E-BD0A-B08948469201}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
